@@ -35,6 +35,7 @@ CREATE TABLE `tasks` (
   `due_date` date DEFAULT NULL,
   `priority` enum('low','medium','high') DEFAULT 'low',
   `status` enum('pending','in-progress','completed') DEFAULT 'pending',
+  `image_name` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -86,7 +87,12 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `email`, `password_hash`, `created_at`) VALUES
 (1, 'testuser', 'test@example.com', 'dummy_hash', '2024-11-21 13:28:54');
 
+-- --------------------------------------------------------
+
 --
+-- Table structure for table `task_images`
+--
+
 -- Indexes for dumped tables
 --
 

@@ -66,6 +66,17 @@
       </select>
     </div>
 
+    <div class="form-group">
+      <label for="taskImage">Task Image</label>
+      <input 
+        type="file" 
+        class="form-control" 
+        id="taskImage" 
+        (change)="onFileSelected($event)"
+        accept="image/*">
+      <small class="form-text text-muted">Optional: Add an image to your task</small>
+    </div>
+
     <button
       class="btn btn-primary btn-sm"
       [disabled]="f.invalid">
@@ -79,7 +90,7 @@
   <table class="task-table">
     <thead>
       <tr>
-        <th>Title</th>
+        <th>Title & Image</th>
         <th>Description</th>
         <th>Due Date</th>
         <th>Priority</th>
@@ -89,7 +100,15 @@
     </thead>
     <tbody>
       <tr *ngFor="let task of tasks">
-        <td>{{ task.title }}</td>
+        <td class="title-image-cell">
+          <div class="title-image-container">
+            <img *ngIf="task.image_name" 
+                 [src]="getImageUrl(task)" 
+                 alt="Task image" 
+                 class="task-thumbnail">
+            <span class="task-title">{{ task.title }}</span>
+          </div>
+        </td>
         <td>{{ task.description }}</td>
         <td>{{ task.due_date | date:'MMM d, y' }}</td>
         <td>

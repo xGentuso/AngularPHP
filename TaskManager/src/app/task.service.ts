@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from './task';
 import { Task } from './task';
@@ -8,19 +8,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class TaskService {
-  // Note the full URL to the API
   private apiUrl = 'http://localhost/taskapi';
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/list_tasks.php`, {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }),
-      withCredentials: false // Important: set this to false for now
-    });
+    return this.http.get(`${this.apiUrl}/list_tasks.php`);
   }
 
   add(task: Task): Observable<ApiResponse> {
@@ -28,6 +21,14 @@ export class TaskService {
   }
 
   deleteTask(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/tasks/${id}`);
+    return this.http.delete(`${this.apiUrl}/delete_task.php?id=${id}`);
+  }
+
+  uploadFile(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/upload.php`, formData);
+  }
+
+  update(task: Task): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update_task.php?id=${task.id}`, task);
   }
 }

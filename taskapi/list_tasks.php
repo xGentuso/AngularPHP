@@ -13,7 +13,7 @@ require 'connect.php';
     
 try {
     $tasks = [];
-    $sql = "SELECT id, user_id, title, description, due_date, priority, status, created_at FROM tasks";
+    $sql = "SELECT id, user_id, title, description, due_date, priority, status, image_name, created_at FROM tasks";
 
     $result = mysqli_query($con, $sql);
     

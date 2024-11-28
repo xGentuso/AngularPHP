@@ -24,6 +24,7 @@ if(isset($postdata) && !empty($postdata)) {
     $due_date = mysqli_real_escape_string($con, trim($request->due_date));
     $priority = mysqli_real_escape_string($con, trim($request->priority));
     $status = mysqli_real_escape_string($con, trim($request->status));
+    $image_name = isset($request->image_name) ? mysqli_real_escape_string($con, trim($request->image_name)) : null;
 
     // Validate required fields
     if(empty($title)) {
@@ -32,8 +33,9 @@ if(isset($postdata) && !empty($postdata)) {
         exit();
     }
 
-    $sql = "INSERT INTO tasks (title, description, due_date, priority, status) 
-            VALUES ('$title', '$description', '$due_date', '$priority', '$status')";
+    $sql = "INSERT INTO tasks (title, description, due_date, priority, status, image_name) 
+            VALUES ('$title', '$description', '$due_date', '$priority', '$status', " . 
+            ($image_name ? "'$image_name'" : "NULL") . ")";
 
     if(mysqli_query($con, $sql)) {
         $id = mysqli_insert_id($con);
@@ -43,7 +45,8 @@ if(isset($postdata) && !empty($postdata)) {
             'description' => $description,
             'due_date' => $due_date,
             'priority' => $priority,
-            'status' => $status
+            'status' => $status,
+            'image_name' => $image_name
         ];
         http_response_code(201);
         echo json_encode([
